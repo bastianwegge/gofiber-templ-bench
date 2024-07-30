@@ -1,0 +1,20 @@
+package views
+
+import (
+	"context"
+	"github.com/charmbracelet/log"
+)
+
+func GetX(ctx context.Context) string {
+	log.Info("Hiiiii", "ctx", ctx)
+	log.Info("context", "context.Value('X')", ctx.Value("X"))
+	if x, ok := ctx.Value("X").(string); ok {
+		return x
+	}
+	return "no value"
+}
+
+templ Greeter() {
+	<span>Hello, World!</span>
+	<div>{ GetX(ctx) }</div>
+}
