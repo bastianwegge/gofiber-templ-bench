@@ -2,19 +2,29 @@ package views
 
 import (
 	"context"
+	"fmt"
 	"github.com/charmbracelet/log"
+	"test/translations"
 )
 
-func GetX(ctx context.Context) string {
-	log.Info("Hiiiii", "ctx", ctx)
-	log.Info("context", "context.Value('X')", ctx.Value("X"))
-	if x, ok := ctx.Value("X").(string); ok {
+func Translate(ctx context.Context, path string) string {
+	log.Info("translate", "context.Value('translate')", ctx.Value("translate"))
+	if translate, ok := ctx.Value("translate").(translations.TranslateFunc); ok {
+		return translate(path)
+	}
+	return fmt.Sprintf("t:%s", path)
+}
+
+func GetLanguage(ctx context.Context) string {
+	log.Info("language", "context.Value('language')", ctx.Value("language"))
+	if x, ok := ctx.Value("language").(string); ok {
 		return x
 	}
 	return "no value"
 }
 
 templ Greeter() {
-	<span>Hello, World!</span>
-	<div>{ GetX(ctx) }</div>
+	<div>Hello, World!</div>
+	<div>GetLanguage: { GetLanguage(ctx) }</div>
+	<div>Translate: { Translate(ctx, "my.path") }</div>
 }

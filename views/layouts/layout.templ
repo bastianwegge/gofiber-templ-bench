@@ -1,0 +1,15 @@
+package layouts
+
+templ NavComponent() {
+	<nav>Navigation</nav>
+}
+
+templ MainLayoutView(content templ.Component) {
+	<html>
+		<head></head>
+		<body>
+			@NavComponent()
+			@content
+		</body>
+	</html>
+}

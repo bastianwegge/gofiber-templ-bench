@@ -10,13 +10,22 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"context"
+	"fmt"
 	"github.com/charmbracelet/log"
+	"test/translations"
 )
 
-func GetX(ctx context.Context) string {
-	log.Info("Hiiiii", "ctx", ctx)
-	log.Info("context", "context.Value('X')", ctx.Value("X"))
-	if x, ok := ctx.Value("X").(string); ok {
+func Translate(ctx context.Context, path string) string {
+	log.Info("translate", "context.Value('translate')", ctx.Value("translate"))
+	if translate, ok := ctx.Value("translate").(translations.TranslateFunc); ok {
+		return translate(path)
+	}
+	return fmt.Sprintf("t:%s", path)
+}
+
+func GetLanguage(ctx context.Context) string {
+	log.Info("language", "context.Value('language')", ctx.Value("language"))
+	if x, ok := ctx.Value("language").(string); ok {
 		return x
 	}
 	return "no value"
@@ -40,16 +49,29 @@ func Greeter() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span>Hello, World!</span><div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div>Hello, World!</div><div>GetLanguage: ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(GetX(ctx))
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(GetLanguage(ctx))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/greeter.templ`, Line: 19, Col: 17}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/greeter.templ`, Line: 28, Col: 37}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div>Translate: ")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var3 string
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(Translate(ctx, "my.path"))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/greeter.templ`, Line: 29, Col: 44}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
