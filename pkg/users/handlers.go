@@ -26,7 +26,7 @@ func (h *Handler) Index(c *fiber.Ctx) error {
 			return fmt.Sprintf("/user/%d/edit", id)
 		},
 	}
-	err := h.DB.Find(&vm.Users).Preload("Address").Error
+	err := h.DB.Model(models.User{}).Preload("Address").Find(&vm.Users).Error
 	if err != nil {
 		return err
 	}

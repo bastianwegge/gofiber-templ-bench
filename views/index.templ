@@ -18,7 +18,7 @@ templ IndexView(vm IndexViewModel) {
 				<li>
 					<div>
 						<a href={ templ.SafeURL(vm.EditLink(user.ID)) }>edit</a>
-						{ user.Name }, { user.Email }, Address: { user.Address.Name } ({ fmt.Sprint(user.Address.ID) })
+						{ user.Name }, { user.Email }, Address: { user.Address.Name } ({ fmt.Sprint(user.AddressID) })
 					</div>
 				</li>
 			}
