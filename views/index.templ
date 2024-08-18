@@ -1,0 +1,32 @@
+package views
+
+import (
+	"fmt"
+	"gofiber-templ-bench/pkg/models"
+)
+
+type IndexViewModel struct {
+	Users    []models.User
+	EditLink func(id uint) string
+}
+
+templ IndexView(vm IndexViewModel) {
+	<div>
+		<div>Users:</div>
+		<ul>
+			for _, user := range vm.Users {
+				<li>
+					<div>
+						<a href={ templ.SafeURL(vm.EditLink(user.ID)) }>edit</a>
+						{ user.Name }, { user.Email }, Address: { user.Address.Name } ({ fmt.Sprint(user.Address.ID) })
+					</div>
+				</li>
+			}
+		</ul>
+	</div>
+	<div>
+		<div>Context Values:</div>
+		<div>GetLanguage: { GetLanguage(ctx) }</div>
+		<div>Translate: { Translate(ctx, "my.path") }</div>
+	</div>
+}

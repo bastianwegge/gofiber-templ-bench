@@ -1,0 +1,67 @@
+package forms
+
+import (
+	"fmt"
+	"gofiber-templ-bench/pkg/models"
+)
+
+type ViewModel struct {
+	User *models.User
+}
+
+templ VenueForm(viewModel ViewModel) {
+	<a href="/">back</a>
+	<form
+		class="space-y-2"
+		action={ templ.SafeURL("/user/" + fmt.Sprint(viewModel.User.ID)) }
+		method="post"
+		hx-boost="true"
+	>
+		<!-- Form body -->
+		<div class="flex">
+			<div>
+				<h2>Editing User { fmt.Sprint(viewModel.User.ID) }</h2>
+				<div>
+					<input type="hidden" name="id" value={ fmt.Sprint(viewModel.User.ID) }/>
+					@Input(InputConfig{
+						Label:  "User Name",
+						Name:   "Name",
+						Value:  viewModel.User.Name,
+						Errors: viewModel.User.ValidateName(),
+					})
+					@RenderErrors(viewModel.User.ValidateName())
+				</div>
+				<div>
+					@Input(InputConfig{
+						Label:  "Email",
+						Name:   "Email",
+						Value:  fmt.Sprint(viewModel.User.Email),
+						Errors: viewModel.User.ValidateEmail(),
+					})
+					@RenderErrors(viewModel.User.ValidateEmail())
+				</div>
+				<div>
+					@Input(InputConfig{
+						Label:  "Address",
+						Name:   "AddressID",
+						Value:  fmt.Sprint(viewModel.User.AddressID),
+						Errors: viewModel.User.ValidateAddress(),
+					})
+					@RenderErrors(viewModel.User.ValidateAddress())
+				</div>
+				<div>
+					Address: { viewModel.User.Address.Name } ({ fmt.Sprint(viewModel.User.AddressID) })
+				</div>
+			</div>
+		</div>
+		<!-- Submit button -->
+		<div>
+			<button
+				type="submit"
+				class="w-full px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+			>
+				Submit
+			</button>
+		</div>
+	</form>
+}

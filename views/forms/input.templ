@@ -1,0 +1,47 @@
+package forms
+
+var Reset string = "appearance-none"
+var BaseStyle string = "rounded-md border text-base font-medium outline-none focus:shadow-md"
+var BorderColors string = "border-[#e0e0e0] focus:border-[#6A64F1]"
+var TextAndBgColors string = "text-[#6B7280] dark:text-white bg-white dark:bg-slate-700"
+var InputClasses []string = []string{Reset, BaseStyle, BorderColors, TextAndBgColors}
+var LabelClasses string = "mb-1 block text-base font-medium text-[#07074D] dark:bg-slate-700 dark:text-white"
+
+type InputConfig struct {
+	Label       string
+	Name        string
+	Value       string
+	Placeholder string
+	Readonly    bool
+	HideLabel   bool
+	Errors      []string
+}
+
+templ RenderErrors(errors []string) {
+	for _, err := range errors {
+		<span style="color: darkred;">
+			{ err }
+		</span>
+	}
+}
+
+templ Input(inputConfig InputConfig) {
+	if !inputConfig.HideLabel {
+		<label
+			for={ inputConfig.Name }
+			class={ LabelClasses }
+		>
+			{ inputConfig.Label }
+		</label>
+	}
+	<input
+		type="text"
+		class={ "w-full px-2", InputClasses }
+		name={ inputConfig.Name }
+		value={ inputConfig.Value }
+		placeholder={ inputConfig.Placeholder }
+		if inputConfig.Readonly {
+			readonly
+		}
+	/>
+}

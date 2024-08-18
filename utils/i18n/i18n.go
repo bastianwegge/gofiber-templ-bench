@@ -1,4 +1,4 @@
-package translations
+package i18n
 
 import (
 	"fmt"
@@ -18,5 +18,14 @@ func Translate(c *fiber.Ctx, path string) string {
 func MakeTranslateFn(c *fiber.Ctx) TranslateFunc {
 	return func(path string) string {
 		return Translate(c, path)
+	}
+}
+
+// NewMiddleware attaches language to all requests
+func NewMiddleware() func(c *fiber.Ctx) error {
+	return func(c *fiber.Ctx) error {
+		c.Locals("translate", MakeTranslateFn(c))
+		c.Locals("language", "DE")
+		return c.Next()
 	}
 }

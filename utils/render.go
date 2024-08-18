@@ -3,7 +3,7 @@ package utils
 import (
 	"github.com/a-h/templ"
 	"github.com/gofiber/fiber/v2"
-	"test/views/layouts"
+	"gofiber-templ-bench/views/layouts"
 )
 
 func Render(c *fiber.Ctx, component templ.Component) error {
