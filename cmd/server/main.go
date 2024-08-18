@@ -38,16 +38,20 @@ func main() {
 	app.Post("/user/:id<int>", usersHandler.Update)
 
 	// seed
-	//slog.Info("Seeding Database")
-	//address := models.Address{Name: "154 Bendfieldrd, 4141 Bedminton"}
-	//if err := db.Create(&address).Error; err != nil {
-	//	panic("failed to seed address: " + err.Error())
-	//}
-	//
-	//user := models.User{Name: "Ellen Doe", Email: "ellen@example.com", AddressID: address.ID}
-	//if err := db.Create(&user).Error; err != nil {
-	//	panic("failed to seed user: " + err.Error())
-	//}
+	slog.Info("Seeding Database")
+	address1 := models.Address{Name: "Street 1, 1234 City"}
+	if err := db.Create(&address1).Error; err != nil {
+		panic("failed to seed address: " + err.Error())
+	}
+	address2 := models.Address{Name: "Street 2, 4321 Ytic"}
+	if err := db.Create(&address2).Error; err != nil {
+		panic("failed to seed address: " + err.Error())
+	}
+
+	user := models.User{Name: "Ellen Doe", Email: "ellen@example.com", AddressID: address1.ID}
+	if err := db.Create(&user).Error; err != nil {
+		panic("failed to seed user: " + err.Error())
+	}
 
 	slog.Info("Starting server on port 3000")
 	log.Fatal(app.Listen(":3000"))
