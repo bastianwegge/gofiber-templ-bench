@@ -13,11 +13,7 @@ import (
 	"gofiber-templ-bench/pkg/models"
 )
 
-type ViewModel struct {
-	User *models.User
-}
-
-func Form(viewModel ViewModel) templ.Component {
+func Form(user *models.User) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -39,7 +35,7 @@ func Form(viewModel ViewModel) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var2 templ.SafeURL = templ.SafeURL("/user/" + fmt.Sprint(viewModel.User.ID))
+		var templ_7745c5c3_Var2 templ.SafeURL = templ.SafeURL("/user/" + fmt.Sprint(user.ID))
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(string(templ_7745c5c3_Var2)))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -49,9 +45,9 @@ func Form(viewModel ViewModel) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(viewModel.User.ID))
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(user.ID))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/forms/edit.templ`, Line: 23, Col: 52}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/forms/edit.templ`, Line: 19, Col: 42}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -62,9 +58,9 @@ func Form(viewModel ViewModel) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var4 string
-		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(viewModel.User.ID))
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(user.ID))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/forms/edit.templ`, Line: 25, Col: 73}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/forms/edit.templ`, Line: 21, Col: 63}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -77,13 +73,13 @@ func Form(viewModel ViewModel) templ.Component {
 		templ_7745c5c3_Err = Input(InputConfig{
 			Label:  "User Name",
 			Name:   "Name",
-			Value:  viewModel.User.Name,
-			Errors: viewModel.User.ValidateName(),
+			Value:  user.Name,
+			Errors: user.ValidateName(),
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = RenderErrors(viewModel.User.ValidateName()).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = RenderErrors(user.ValidateName()).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -94,13 +90,13 @@ func Form(viewModel ViewModel) templ.Component {
 		templ_7745c5c3_Err = Input(InputConfig{
 			Label:  "Email",
 			Name:   "Email",
-			Value:  fmt.Sprint(viewModel.User.Email),
-			Errors: viewModel.User.ValidateEmail(),
+			Value:  fmt.Sprint(user.Email),
+			Errors: user.ValidateEmail(),
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = RenderErrors(viewModel.User.ValidateEmail()).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = RenderErrors(user.ValidateEmail()).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -111,13 +107,13 @@ func Form(viewModel ViewModel) templ.Component {
 		templ_7745c5c3_Err = Input(InputConfig{
 			Label:  "Address",
 			Name:   "AddressID",
-			Value:  fmt.Sprint(viewModel.User.AddressID),
-			Errors: viewModel.User.ValidateAddress(),
+			Value:  fmt.Sprint(user.AddressID),
+			Errors: user.ValidateAddress(),
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = RenderErrors(viewModel.User.ValidateAddress()).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = RenderErrors(user.ValidateAddress()).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -126,9 +122,9 @@ func Form(viewModel ViewModel) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var5 string
-		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(viewModel.User.Address.Name)
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(user.Address.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/forms/edit.templ`, Line: 53, Col: 43}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/forms/edit.templ`, Line: 49, Col: 33}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -139,9 +135,9 @@ func Form(viewModel ViewModel) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var6 string
-		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(viewModel.User.AddressID))
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(user.AddressID))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/forms/edit.templ`, Line: 53, Col: 85}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/forms/edit.templ`, Line: 49, Col: 65}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {

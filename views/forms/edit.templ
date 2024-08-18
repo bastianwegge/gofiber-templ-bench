@@ -5,52 +5,48 @@ import (
 	"gofiber-templ-bench/pkg/models"
 )
 
-type ViewModel struct {
-	User *models.User
-}
-
-templ Form(viewModel ViewModel) {
+templ Form(user *models.User) {
 	<a href="/">back</a>
 	<form
 		class="space-y-2"
-		action={ templ.SafeURL("/user/" + fmt.Sprint(viewModel.User.ID)) }
+		action={ templ.SafeURL("/user/" + fmt.Sprint(user.ID)) }
 		method="post"
 		hx-boost="true"
 	>
 		<!-- Form body -->
 		<div class="flex">
 			<div>
-				<h2>Editing User { fmt.Sprint(viewModel.User.ID) }</h2>
+				<h2>Editing User { fmt.Sprint(user.ID) }</h2>
 				<div>
-					<input type="hidden" name="id" value={ fmt.Sprint(viewModel.User.ID) }/>
+					<input type="hidden" name="id" value={ fmt.Sprint(user.ID) }/>
 					@Input(InputConfig{
 						Label:  "User Name",
 						Name:   "Name",
-						Value:  viewModel.User.Name,
-						Errors: viewModel.User.ValidateName(),
+						Value:  user.Name,
+						Errors: user.ValidateName(),
 					})
-					@RenderErrors(viewModel.User.ValidateName())
+					@RenderErrors(user.ValidateName())
 				</div>
 				<div>
 					@Input(InputConfig{
 						Label:  "Email",
 						Name:   "Email",
-						Value:  fmt.Sprint(viewModel.User.Email),
-						Errors: viewModel.User.ValidateEmail(),
+						Value:  fmt.Sprint(user.Email),
+						Errors: user.ValidateEmail(),
 					})
-					@RenderErrors(viewModel.User.ValidateEmail())
+					@RenderErrors(user.ValidateEmail())
 				</div>
 				<div>
 					@Input(InputConfig{
 						Label:  "Address",
 						Name:   "AddressID",
-						Value:  fmt.Sprint(viewModel.User.AddressID),
-						Errors: viewModel.User.ValidateAddress(),
+						Value:  fmt.Sprint(user.AddressID),
+						Errors: user.ValidateAddress(),
 					})
-					@RenderErrors(viewModel.User.ValidateAddress())
+					@RenderErrors(user.ValidateAddress())
 				</div>
 				<div>
-					Address: { viewModel.User.Address.Name } ({ fmt.Sprint(viewModel.User.AddressID) })
+					Address: { user.Address.Name } ({ fmt.Sprint(user.AddressID) })
 				</div>
 			</div>
 		</div>
