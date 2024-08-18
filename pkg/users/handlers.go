@@ -73,7 +73,7 @@ func (h *Handler) Update(c *fiber.Ctx) error {
 
 	// Load form into model
 	if err := c.BodyParser(&user); err != nil {
-		slog.Error("Error parsing form", err)
+		slog.Error("Error parsing form", "err", err)
 		return err
 	}
 
