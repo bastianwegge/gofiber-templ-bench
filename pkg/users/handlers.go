@@ -46,7 +46,7 @@ func (h *Handler) RenderForm(c *fiber.Ctx, user *models.User) error {
 		h.DB.First(&user.Address, user.AddressID)
 	}
 	c.Set("Content-Type", "text/html")
-	return utils.Render(c, forms.VenueForm(forms.ViewModel{User: user}))
+	return utils.Render(c, forms.Form(forms.ViewModel{User: user}))
 }
 
 func (h *Handler) Edit(c *fiber.Ctx) error {
